@@ -1,5 +1,5 @@
 import java.util.*;
-public class Graphs_BFS
+public class Graphs_All_Path_counter
 {
     static class Edge{
         int src;
@@ -35,39 +35,39 @@ public class Graphs_BFS
         graph[4].add(new Edge(4, 3));
         graph[4].add(new Edge(4, 5));
 
-        graph[5].add(new Edge(5, 1));
+        graph[5].add(new Edge(5, 3));
         graph[5].add(new Edge(5, 4));
         graph[5].add(new Edge(5, 6));
 }
 
-public static void BFS(ArrayList<Edge> graph[])
+public static void Counter(ArrayList<Edge> graph[],boolean vis[],int current,int fin, String Path)
 {
-    Queue<Integer> q = new LinkedList<>();
-    boolean[] vis = new boolean[7];
-    q.add(0);
-    while(!q.isEmpty())
+    if(current==fin)
     {
-        int current = q.remove();
-        if(vis[current]==false)
-        {
-            System.out.print(current + " ,");
-            vis[current]=true;
-            for(int i=0;i<graph[current].size();i++)
-            {
-                Edge n =graph[current].get(i);
-                q.add(n.dest);
-            }
-        }
+        Path = Path+current;
+        System.out.println(Path);
+        return;
     }
+        for(int i=0;i<graph[current].size();i++)
+            {
+            
+            Edge n =graph[current].get(i);
+            vis[current]=true;
+            if(vis[n.dest]==false)
+            Counter(graph, vis, n.dest,fin,Path+current);
+            vis[current]=false;
+            }
+    }
+    
 
 
-}
 public static void main(String[] args) {
-    Graphs_BFS g = new Graphs_BFS();
     int v = 7;
     ArrayList<Edge> graph[] = new ArrayList[v];
     CreateGraph(graph);
-    BFS(graph);
+    boolean[] vis = new boolean[v];
+    System.out.println("ALL possible paths");
+    Counter(graph,vis,0,5,"");
 }
    
 }

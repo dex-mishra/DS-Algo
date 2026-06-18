@@ -1,5 +1,5 @@
 import java.util.*;
-public class Graphs_BFS
+public class Graphs_DFS
 {
     static class Edge{
         int src;
@@ -40,34 +40,34 @@ public class Graphs_BFS
         graph[5].add(new Edge(5, 6));
 }
 
-public static void BFS(ArrayList<Edge> graph[])
+public static void DFS(ArrayList<Edge> graph[],boolean vis[],int current)
 {
-    Queue<Integer> q = new LinkedList<>();
-    boolean[] vis = new boolean[7];
-    q.add(0);
-    while(!q.isEmpty())
+    if(vis[current]==false)
     {
-        int current = q.remove();
-        if(vis[current]==false)
-        {
-            System.out.print(current + " ,");
-            vis[current]=true;
-            for(int i=0;i<graph[current].size();i++)
+        System.out.print(current + " ");
+        vis[current]=true;
+        for(int i=0;i<graph[current].size();i++)
             {
                 Edge n =graph[current].get(i);
-                q.add(n.dest);
+                if(vis[n.dest]==false)
+                DFS(graph, vis, n.dest);
             }
-        }
     }
-
-
 }
 public static void main(String[] args) {
-    Graphs_BFS g = new Graphs_BFS();
+    Graphs_BFS_Master g = new Graphs_BFS_Master();
     int v = 7;
     ArrayList<Edge> graph[] = new ArrayList[v];
     CreateGraph(graph);
-    BFS(graph);
+    boolean[] vis = new boolean[v];
+    for(int i=0;i<v;i++)
+    {
+    if(vis[i]==false)
+    {
+        DFS(graph,vis,i);
+    }
+    }
+    
 }
    
 }
